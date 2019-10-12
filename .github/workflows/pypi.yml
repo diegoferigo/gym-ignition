@@ -82,7 +82,7 @@ jobs:
 
       - name: Install Twine
         if: |
-          ${{ format('{{{0}{1}}}', ${{ secrets.TWINE_USERNAME }}, "x") }} == "x"
+          format('{{{0}{1}}}', ${{ secrets.TWINE_USERNAME }}, "x") == "x"
         run: pip install twine
 
       - name: PyPI Release
