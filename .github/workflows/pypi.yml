@@ -81,11 +81,15 @@ jobs:
           pytest
 
       - name: Install Twine
-        if: github.repository == 'robotology/gym-ignition'
+        if: |
+          secrets.TWINE_USERNAME != "" &&
+          secrets.TWINE_PASSWORD != ""
         run: pip install twine
 
       - name: PyPI Release
-        if: github.repository == 'robotology/gym-ignition'
+        if: |
+          secrets.TWINE_USERNAME == "" &&
+          secrets.TWINE_PASSWORD == ""
         run: twine upload --verbose dist/*
         env:
           TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
@@ -185,11 +189,15 @@ jobs:
           docker exec -i test sh -c "cd gym-ignition/tests/python && pytest -v"
 
       - name: Install Twine
-        if: github.repository == 'robotology/gym-ignition'
+        if: |
+          secrets.TWINE_USERNAME != "" &&
+          secrets.TWINE_PASSWORD != ""
         run: docker exec -i test sh -c 'pip install twine'
 
       - name: PyPI Release
-        if: github.repository == 'robotology/gym-ignition'
+        if: |
+          secrets.TWINE_USERNAME != "" &&
+          secrets.TWINE_PASSWORD != ""
         run: |
           docker exec -i -e TWINE_USERNAME -e TWINE_PASSWORD test \
             sh -c 'twine upload --verbose dist/*'
