@@ -317,11 +317,12 @@ class RobotJoints(ABC):
         PIDs gather new measurements from the robot and actuate a new generalized force.
 
         PIDs are updated only if a time greater than the timestep, configured with
-        `set_dt`, has passed. This appproach allows calling this `update` method multiple
+        `set_dt`, has passed. This approach allows calling this `update` method multiple
         times in a faster loop while only updating the low-level PIDs when necessary.
 
         Args:
             current_time: The current time used to check if the PIDs have to be triggered.
+            TODO
 
         Returns:
             True if successful, False otherwise.
@@ -349,4 +350,17 @@ class RobotJoints(ABC):
 
         Returns:
             The maximum generalized force supported by the joint.
+        """
+
+    @abstractmethod
+    def set_joint_force_limit(self, joint_name: str, limit: float) -> bool:
+        """
+        Set the maximum effort of the specified joint.
+
+        Args:
+            joint_name: The name of the joint.
+            limit: The effort limit.
+
+        Returns:
+            True if successful, False otherwise.
         """
