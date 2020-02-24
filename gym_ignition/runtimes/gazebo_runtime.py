@@ -198,6 +198,10 @@ class GazeboRuntime(runtime.Runtime):
         else:
             self._first_run = False
 
+        # Execute a dummy step to expose all data to the reset_task method
+        # TODO
+        self.gazebo.run()
+
         # Reset the environment
         ok_reset = self.task.reset_task()
         assert ok_reset, "Failed to reset the task"
