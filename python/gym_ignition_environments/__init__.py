@@ -50,3 +50,32 @@ register(
             'physics_rate': 1000,
             'real_time_factor': max_float,
             })
+
+# =======================
+# Vectorized Environments
+# =======================
+
+register(
+    id='CartPoleDiscreteBalancing-VecGazebo-v0',
+    entry_point='gym_ignition.experimental.gazebo_vec_runtime:GazeboVecRuntime',
+    max_episode_steps=5000,
+    kwargs={'task_cls': cartpole_discrete_balancing.CartPoleDiscreteBalancing,
+            # 'task_replicas': 4,
+            'task_replicas': 2,
+            'agent_rate': 1000,
+            'physics_rate': 1000,
+            'real_time_factor': max_float,
+            })
+#
+# from .tasks import icub_random
+# register(
+#     id='ICubFalling-VecGazebo-v0',
+#     entry_point='gym_ignition.experimental.gazebo_vec_runtime:GazeboVecRuntime',
+#     max_episode_steps=5000,
+#     kwargs={'task_cls': icub_random.ICubRandom,
+#             # 'task_replicas': 4,
+#             'task_replicas': 2,
+#             'agent_rate': 25,
+#             'physics_rate': 1000,
+#             'real_time_factor': max_float,
+#             })
