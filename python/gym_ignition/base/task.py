@@ -7,6 +7,7 @@ import gym
 import numpy as np
 from typing import Tuple
 from gym.utils import seeding
+from gym_ignition.utils.models_grid import GridPoint
 from gym_ignition import scenario_bindings as bindings
 from gym_ignition.utils.typing import ActionSpace, ObservationSpace
 from gym_ignition.utils.typing import Action, Observation, Reward, SeedList
@@ -44,7 +45,7 @@ class Task(abc.ABC):
     action_space: gym.spaces.Space = None
     observation_space: gym.spaces.Space = None
 
-    def __init__(self, agent_rate: float) -> None:
+    def __init__(self, agent_rate: float, slot: GridPoint = GridPoint(x=0, y=0)) -> None:
 
         # World object
         self._world = None
@@ -59,6 +60,9 @@ class Task(abc.ABC):
 
         #: The seed of the task
         self.seed: int
+
+        #: Area of the world reserved for the task
+        self.slot = slot
 
         # Initialize the RNG and the seed
         self.np_random, self.seed = seeding.np_random()
