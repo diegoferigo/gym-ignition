@@ -241,7 +241,11 @@ public:
     /// \brief Boolean value that is true only the first call of Configure and
     /// PreUpdate.
     bool firstRun = true;
+
+public:
+    static std::mutex initMutex;
 };
+std::mutex Physics::Impl::initMutex;
 
 Physics::Physics()
     : System()
@@ -323,8 +327,11 @@ void Physics::Impl::CreatePhysicsEntities(const EntityComponentManager& _ecm)
         sdf::World world;
         world.SetName(_name->Data());
         world.SetGravity(_gravity->Data());
-        auto worldPtrPhys = this->engine->ConstructWorld(world);
-        this->entityWorldMap.insert(std::make_pair(_entity, worldPtrPhys));
+        {
+            std::lock_guard<std::mutex> lock(Impl::initMutex);
+            auto worldPtrPhys = this->engine->ConstructWorld(world);
+            this->entityWorldMap.insert(std::make_pair(_entity, worldPtrPhys));
+        }
 
         return true;
     };
