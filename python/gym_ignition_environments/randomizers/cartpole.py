@@ -15,6 +15,11 @@ from gym_ignition.randomizers import gazebo_env_randomizer
 from gym_ignition.randomizers.gazebo_env_randomizer import MakeEnvCallable
 from gym_ignition.randomizers.model.sdf import Method, Distribution, UniformParams
 
+from gym_ignition import base
+from typing import Dict, Union
+from gym_ignition.utils import models_grid
+from gym_ignition.experimental import gazebo_vec_task_randomizer, gazebo_vec_runtime
+
 # Tasks that are supported by this randomizer. Used for type hinting.
 SupportedTasks = Union[tasks.cartpole_discrete_balancing.CartPoleDiscreteBalancing,
                        tasks.cartpole_continuous_swingup.CartPoleContinuousSwingup,
@@ -209,3 +214,27 @@ class CartpoleEnvRandomizer(gazebo_env_randomizer.GazeboEnvRandomizer,
         # Initialize the environment randomizer
         gazebo_env_randomizer.GazeboEnvRandomizer.__init__(
             self, env=env, physics_randomizer=self)
+
+
+class CartpoleBalancingVecEnvRandomizer(
+    gazebo_vec_task_randomizer.GazeboVecTaskRandomizer, CartpoleRandomizersMixin):
+    """
+    Concrete implementation of cartpole vectorized environments randomization.
+    """
+
+    def __init__(self, venv: gazebo_vec_runtime.GazeboVecRuntime, seed: int = None):
+
+        # Initialize the mixin
+        CartpoleRandomizersMixin.__init__(self, seed=seed)
+
+        # Initialize the environment randomizer
+        gazebo_vec_task_randomizer.GazeboVecTaskRandomizer.__init__(
+            self, venv=venv)
+
+        # Helper for inserting the models in a grid
+        grid = models_grid.ModelsGrid(stride=models_grid.Stride(dx=2, dy=5))
+        grid_generator = iter(grid)
+
+        # Assign a slot to each tasks
+        for task in self.env.tasks:
+            task.slot = next(grid_generator)
