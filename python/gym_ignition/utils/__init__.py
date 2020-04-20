@@ -5,6 +5,7 @@
 from . import misc
 from .typing import *
 from . import scenario
+from . import models_grid
 from . import resource_finder
 from . import gazebo_env_vars
 from . import inverse_kinematics_nlp
