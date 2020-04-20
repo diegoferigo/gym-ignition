@@ -4,3 +4,10 @@
 
 # Base C++ environment
 from . import gympp_env
+
+# Runtime exposing stable_baselines.common.vec_env.VecEnv
+from . import vec_runtime
+from . import gazebo_vec_runtime
+
+# Task randomizer for vectorized runtime
+from . import gazebo_vec_task_randomizer
