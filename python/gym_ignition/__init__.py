@@ -2,6 +2,10 @@
 # This software may be modified and distributed under the terms of the
 # GNU Lesser General Public License v2.1 or any later version.
 
+# Import this before the bindings otherwise we get segfault
+# TODO: check what import is the culprit
+import stable_baselines
+
 # Workaround for https://github.com/osrf/sdformat/issues/227.
 # It has to be done before loading the bindings.
 import gym_ignition_models
