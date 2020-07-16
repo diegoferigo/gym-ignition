@@ -22,8 +22,26 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-add_subdirectory(Physics)
-add_subdirectory(ECMProvider)
-add_subdirectory(JointController)
-add_subdirectory(ControllerRunner)
-add_subdirectory(ActuationDelay)
+add_library(ActuationDelay SHARED
+    ActuationDelay.h
+    ActuationDelay.cpp)
+
+target_link_libraries(ActuationDelay
+    PUBLIC
+    ignition-gazebo3::core
+    PRIVATE
+#    ExtraComponents
+    ScenarioGazebo)
+
+target_include_directories(ActuationDelay PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
+
+# TODO: install with bindings in PyPI mode
+if(NOT CMAKE_BUILD_TYPE STREQUAL "PyPI")
+    install(
+        TARGETS ActuationDelay
+        EXPORT scenario
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/scenario/plugins
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/scenario/plugins
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/scenario/plugins)
+endif()
