@@ -148,6 +148,7 @@ setup(
         'numpy',
         'gym_ignition_models',
         'lxml',
+        'dataclasses',
     ],
     packages=find_packages("python"),
     package_dir={'': "python"},
