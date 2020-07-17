@@ -94,7 +94,7 @@ class GazeboEnvRandomizer(gym.Wrapper,
         self.env.physics_randomizer.increase_rollout_counter()
 
         # Reset the task through the TaskRandomizer
-        self.randomize_task(self.env.task, self.env.gazebo, **kwargs)
+        self.randomize_task(task=self.env.task, gazebo=self.env.gazebo, **kwargs)
 
         ok_paused_run = self.env.gazebo.run(paused=True)
 
