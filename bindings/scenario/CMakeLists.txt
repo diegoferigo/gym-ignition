@@ -51,7 +51,7 @@ else()
 
     # Install the plugins
     install(
-        TARGETS ECMProvider PhysicsSystem ControllerRunner JointController
+        TARGETS ECMProvider PhysicsSystem ControllerRunner JointController ActuationDelay
         LIBRARY DESTINATION ${PYTHON_PACKAGE_IMPORT_NAME}/plugins)
 
     # Install other shared libraries.
