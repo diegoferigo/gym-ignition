@@ -156,6 +156,16 @@ endif()
 option(GYMIGNITION_USE_IGNITION
     "Build C++ code depending on Ignition Robotics" ${ignition-gazebo3_FOUND})
 
+# Find YARP
+if(NOT CMAKE_BUILD_TYPE STREQUAL "PyPI")
+    find_package(YARP COMPONENTS os dev robotinterface)
+else()
+    find_package(YARP 3.2 REQUIRED)
+endif()
+
+option(GYMIGNITION_USE_YARP
+    "Build C++ code depending on the YARP middleware" ${YARP_FOUND})
+
 # Helper for exporting targets
 include(InstallBasicPackageFiles)
 
