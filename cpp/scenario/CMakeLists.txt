@@ -18,6 +18,10 @@ if(GYMIGNITION_USE_IGNITION)
 
 endif()
 
+if(GYMIGNITION_USE_YARP)
+    add_subdirectory(yarp)
+endif()
+
 # Dummy meta target for the top-level EXPORT
 add_library(Scenario INTERFACE)
 
