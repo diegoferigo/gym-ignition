@@ -12,8 +12,15 @@ RUN if [ "${INSTALL_DOCKER}" = "true" ]; then \
     fi \
     && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
 
-USER codespace
+# Enable debian stretch backports
+RUN echo "deb http://ftp.debian.org/debian stretch-backports main" > \
+        /etc/apt/sources.list.d/stretch-backports.list
 
-# ** [Optional] Uncomment this section to install additional packages. **
-# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends <your-package-list-here>
+# Install dependencies
+RUN apt-get update &&\
+    apt-get -t stretch-backports -y install --no-install-recommends \
+        cmake \
+        &&\
+    rm -rf /var/lib/apt/lists/*
+
+USER codespace
