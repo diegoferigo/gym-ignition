@@ -115,6 +115,10 @@ public:
                           const std::array<double, 3>& torque,
                           const double duration = 0.0) override;
 
+    bool applyWorldWrenchToCoM(const std::array<double, 3>& force,
+                               const std::array<double, 3>& torque,
+                               const double duration = 0.0);
+
 private:
     class Impl;
     std::unique_ptr<Impl> pImpl;
